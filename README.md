@@ -5,8 +5,7 @@ Dette repositoriet inneholder en komplett konfigurasjon for å integrere og styr
 Prosjektet er basert på en detaljert guide som kan finnes her:
 *   [Home Assistant Automasjon av Ventilasjonsanlegg via Modbus (domotics.no)](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus)
 
-![Lovelace Dashboard](screenshot.png)
-<!-- Du bør erstatte screenshot.png med et faktisk bilde av ditt dashboard -->
+![Lovelace Dashboard](image/Ventilasjon%20kort.png)
 
 ## Funksjoner
 
@@ -44,62 +43,74 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 ### Trinn 2.1: Fysisk Installasjon av Elfin EW11
 
-> **ADVARSEL:** Alltid koble fra strømmen til ventilasjonsanlegget før du åpner det og jobber med koblinger. Hvis du er usikker på strøm og koblinger, spesielt "svakstrøm", bør du konsultere en elektriker.
+> **ADVARSEL:** Alltid koble fra strømmen til ventilasjonsanlegget før du åpner det og jobber med koblinger. Hvis du er usikker, bør du konsultere en elektriker.
 
-1.  **Finn Modbus-porten:** På hovedkortet til VTR-500, finn Modbus-terminalen. Den er vanligvis merket med `A(+)` og `B(-)`.
-2.  **Finn Strømkilde:** Elfin EW11 trenger 5-36V strøm. VTR-500 hovedkortet har ofte en 24V-utgang som kan brukes. Finn en terminal merket `24V` og `GND` (jord).
-3.  **Koble til Elfin EW11:**
+1.  **Finn Modbus- og strøm-porten:** På hovedkortet til VTR-500, finn terminalen for ekstern kommunikasjon. Den er merket med `A(+)`, `B(-)`, `24V` og `GND`.
+    ![Koblingsskjema VTR-500](image/koblingsskjemaVTR-500.png)
+2.  **Koble til Elfin EW11:**
     *   Koble `A+` fra anlegget til `A` på EW11.
     *   Koble `B-` fra anlegget til `B` på EW11.
     *   Koble `24V` fra anlegget til `+` (Power Supply) på EW11.
     *   Koble `GND` fra anlegget til `-` (Power Supply) på EW11.
-
-<!-- Foreslå å legge til bilde av koblingsskjema her, likt det du har i guiden -->
-![Koblingsskjema](wiring_diagram.png)
-
-4.  **Gjenopprett strømmen:** Når alt er trygt koblet, kan du slå på strømmen til ventilasjonsanlegget. Du skal nå se at lysene på Elfin EW11-enheten slår seg på.
+    ![Koblingsskjema EW11](image/koblings%20skjema%20EW11.png)
+3.  **Gjenopprett strømmen:** Når alt er trygt koblet, slå på strømmen til anlegget. Lysene på Elfin EW11 skal nå slå seg på.
 
 ### Trinn 2.2: Konfigurere Elfin EW11
 
-EW11 må konfigureres til å koble seg på ditt nettverk og oversette Modbus-signalene korrekt.
-
-1.  **Koble til EW11s nettverk:** EW11 vil opprette sitt eget Wi-Fi-nettverk (f.eks. `EW1x_...`). Koble deg til dette fra en PC eller mobil. Det krever ikke passord.
-2.  **Åpne web-grensesnitt:** Åpne en nettleser og gå til `http://10.10.100.254`. Logg inn med standard brukernavn `admin` og passord `admin`.
-3.  **Koble til ditt Wi-Fi:** Under "System Settings", finn "WiFi Settings". Sett "Wifi Mode" til "STA", finn ditt hjemmenettverk (SSID), skriv inn passordet og lagre.
-4.  **Restart og finn ny IP:** Enheten vil restarte og koble seg til ditt nettverk. Finn den nye IP-adressen den har fått (sjekk i DHCP-listen på ruteren din). **Det anbefales sterkt å sette en statisk IP-adresse for enheten.**
-5.  **Konfigurer serieport (Serial Port Settings):** Logg inn på den nye IP-adressen. Gå til "Serial Port Settings" og sett verdiene til å matche anlegget ditt. For Systemair VTR-500 er disse vanligvis:
+1.  **Koble til EW11s nettverk:** EW11 vil opprette sitt eget Wi-Fi-nettverk (f.eks. `EW1x_...`). Koble til dette. Det krever ikke passord.
+2.  **Åpne web-grensesnitt:** Åpne en nettleser og gå til `http://10.10.100.254`. Logg inn med `admin` / `admin`.
+3.  **Koble til ditt Wi-Fi:** Under "System Settings", finn "WiFi Settings". Sett "Wifi Mode" til "STA", finn ditt hjemmenettverk, skriv inn passordet og lagre.
+    ![System Settings EW11](image/system%20settings%20EW11.png)
+4.  **Restart og finn ny IP:** Enheten vil restarte. Finn den nye IP-adressen den har fått (sjekk i ruteren din). **Det anbefales sterkt å sette en statisk IP-adresse for enheten.**
+5.  **Konfigurer serieport:** Logg inn på den nye IP-adressen. Gå til "Serial Port Settings". For Systemair VTR-500 er verdiene:
     *   **Baud Rate:** `115200`
     *   **Data Bit:** `8`
     *   **Parity:** `Even`
-    *   **Stop Bit:** `1`
     *   **Protocol:** `Modbus`
-6.  **Konfigurer kommunikasjon (Communication Settings):**
-    *   Gå til "Communication Settings" og slett eventuelle eksisterende profiler.
-    *   Legg til en ny med "+Add".
+    ![Serial Port Settings EW11](image/serial%20port%20settings%20EW11.png)
+6.  **Konfigurer kommunikasjon:** Gå til "Communication Settings" og slett eventuelle eksisterende profiler. Legg til en ny med:
     *   **Protocol:** `Tcp Server`
-    *   **Local Port:** `502` (standard for Modbus TCP)
-7.  **Verifiser:** Gå til "Status"-siden. Hvis alt er riktig, vil du se at tellerne for "Received Bytes/Frames" og "Sent Bytes/Frames" begynner å øke. Dette bekrefter at kommunikasjonen mellom EW11 og ventilasjonsanlegget fungerer!
+    *   **Local Port:** `502`
+    ![Communication Settings EW11](image/communication%20settings%20EW11.png)
+7.  **Verifiser:** Gå til "Status"-siden. Du skal nå se at tellerne for mottatte og sendte datapakker øker. Dette bekrefter at kommunikasjonen fungerer!
+    ![Kommunikasjon EW11](image/kommunikasjon%20EW11.png)
 
 ### Trinn 2.3: Konfigurasjon i Home Assistant
 
-1.  **Aktiver "Packages":** Sørg for at Home Assistant er satt opp til å laste inn pakker. Legg til følgende i din `configuration.yaml`-fil:
+1.  **Aktiver "Packages":** Sørg for at `configuration.yaml` inneholder:
     ```yaml
     homeassistant:
       packages: !include_dir_named packages
     ```
 2.  **Opprett mappe:** Lag en mappe som heter `packages` i din `/config`-mappe.
-3.  **Legg til konfigurasjonen:** Lagre filen `systemair.txt` fra dette repoet som **`systemair.yaml`** inne i `/config/packages/`-mappen.
-4.  **Oppdater IP-adressen:** Åpne `config/packages/systemair.yaml` og endre `host` til den statiske IP-adressen du satte for din Elfin EW11.
+3.  **Legg til konfigurasjonen:** Plasser `systemair.yaml` fra dette repoet i `/config/packages/`.
+4.  **Oppdater IP-adressen:** Åpne `systemair.yaml` og endre `host` til den statiske IP-adressen til din Elfin EW11.
 5.  **Start Home Assistant på nytt.**
 
 ### Trinn 2.4: Sett opp Lovelace Dashboard
 
-1.  Åpne et dashboard, gå i redigeringsmodus, velg "Manuell"-kort og lim inn innholdet fra `Custom button-card.txt`.
+1.  Åpne et dashboard, gå i redigeringsmodus, velg "Manuell"-kort og lim inn innholdet fra `Custom button-card.yaml`. Filene `thermostat.yaml` og `type entities.yaml` er del-komponenter som `Custom button-card.yaml` refererer til.
 
 ### Trinn 2.5: Importer Node-RED Flow
 
 1.  Åpne Node-RED, gå til Meny -> Import, og lim inn innholdet fra `flows.json`.
 2.  **VIKTIG:** Gå gjennom de nye nodene og oppdater `entity_id` for dine fukt- og CO2-sensorer.
 3.  Klikk "Deploy".
+    ![Node-RED Flow](image/Node-Red%20VTR500.png)
 
-Du er nå ferdig! Du har et fullt fungerende, intelligent ventilasjonssystem styrt av Home Assistant.
+---
+
+## Filforklaring
+
+*   **`systemair.yaml`**: Hovedkonfigurasjonen for Home Assistant, formatert som en "package".
+*   **`flows.json`**: Node-RED-flyt for intelligent automasjon.
+*   **`Custom button-card.yaml`**: Hovedfilen for Lovelace-dashboardet.
+*   **`thermostat.yaml` / `type entities.yaml`**: Støttefiler for dashboardet.
+*   **`/image`**: Skjermbilder og diagrammer brukt i denne guiden.
+*   **`LICENSE`**: MIT-lisensfil.
+
+## Anerkjennelser
+Prosjektet er skrevet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer, rydde i README-en og pusse på skript. Alle forslag er manuelt vurdert før de ble tatt inn, og all konfigurasjon og testing er gjort av meg.
+
+## 📝 Lisens
+MIT — se `LICENSE`.
