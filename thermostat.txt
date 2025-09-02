@@ -1,0 +1,3 @@
+type: thermostat
+entity: climate.vent_vtr500
+name: Ventilasjon

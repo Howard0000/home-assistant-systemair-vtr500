@@ -1,0 +1,18 @@
+type: entities
+entities:
+  - entity: sensor.vtr500_supply_temperature
+    name: Inntak Temperatur
+  - entity: sensor.vtr500_exhaust_temperature
+    name: Avtrekk Temperatur
+  - entity: sensor.vtr500_heat_recovery
+    name: Varmegjenvinning
+  - entity: sensor.vtr500_summer_winter_operational_status
+    name: Aktiv sesong
+  - entity: sensor.vtr500_time_to_filter_change_months
+    name: Neste filter bytte
+  - entity: sensor.vtr500_outdoor_temperature
+    name: Utendørs temperatur
+  - entity: sensor.vtr500_exhaust_air_rf
+  - entity: sensor.vtr500_supply_air_rf
+  - entity: sensor.vtr500_calculated_moisture_extraction
+  - entity: sensor.vtr500_calculated_moisture_intake
