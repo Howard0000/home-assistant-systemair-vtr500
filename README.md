@@ -113,9 +113,10 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 Dette prosjektet hadde ikke vært mulig uten arbeidet til andre i Home Assistant-miljøet.
 
-Kjernekonfigurasjonen (systemair.yaml) er basert på det fantastiske arbeidet gjort av @Ztaeyn. Hans repositorium HomeAssistant-VTR-Modbus var det avgjørende startpunktet for denne integrasjonen.
-Prosjektet er videreutviklet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer og rydde i README.md. All konfigurasjon og testing er gjort av meg.
+*   Kjernekonfigurasjonen (`systemair.yaml`) er basert på det fantastiske arbeidet gjort av **@Ztaeyn**. Hans repositorium [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) var det avgjørende startpunktet for denne integrasjonen.
+*   Prosjektet er videreutviklet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer og rydde i `README.md`. All konfigurasjon og testing er gjort av meg.
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
