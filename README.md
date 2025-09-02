@@ -109,8 +109,13 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 *   **`/image`**: Skjermbilder og diagrammer brukt i denne guiden.
 *   **`LICENSE`**: MIT-lisensfil.
 
-## Anerkjennelser
-Prosjektet er skrevet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer, rydde i README-en og pusse på skript. Alle forslag er manuelt vurdert før de ble tatt inn, og all konfigurasjon og testing er gjort av meg.
+## Anerkjennelser og Credits
+
+Dette prosjektet hadde ikke vært mulig uten arbeidet til andre i Home Assistant-miljøet.
+
+Kjernekonfigurasjonen (systemair.yaml) er basert på det fantastiske arbeidet gjort av @Ztaeyn. Hans repositorium HomeAssistant-VTR-Modbus var det avgjørende startpunktet for denne integrasjonen.
+Prosjektet er videreutviklet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer og rydde i README.md. All konfigurasjon og testing er gjort av meg.
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
