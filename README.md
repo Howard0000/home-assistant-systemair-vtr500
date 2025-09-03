@@ -4,7 +4,7 @@
 
 This repository provides a complete configuration for integrating and controlling a Systemair SAVE VTR-500 ventilation unit with Home Assistant via Modbus TCP.
 
-![Lovelace Dashboard](image/Ventilation%20kort.png)
+![Lovelace Dashboard](image/Ventilasjon%20kort.png)
 
 ## Features
 
@@ -129,4 +129,5 @@ The automation will automatically restore normal operation at **04:00 on weekday
 *   The project has been further developed by @Howard0000. An AI assistant helped clean up the `README.md`.
 
 ## 📝 License
+
 MIT — see `LICENSE`.
