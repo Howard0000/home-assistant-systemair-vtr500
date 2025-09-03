@@ -88,7 +88,37 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 ### Trinn 2.4: Sett opp Lovelace Dashboard
 
-1.  Åpne et dashboard, gå i redigeringsmodus, velg "Manuell"-kort og lim inn innholdet fra `Custom button-card.yaml`.
+Dashboardet gir deg den visuelle kontrollen over anlegget. For at det skal fungere, må du ha installert de nødvendige HACS-kortene nevnt under "Krav" (`Mushroom`, `button-card`, `numberbox-card`).
+
+Konfigurasjonen er delt opp i tre separate filer for enklere håndtering. Du må legge til **tre separate "Manuell"-kort** på dashboardet ditt, ett for hver fil.
+
+**Slik gjør du det:**
+
+1.  Naviger til dashboardet du vil bruke i Home Assistant, og klikk på de tre prikkene øverst til høyre for å velge **"Rediger dashboard"**.
+2.  Klikk på den blå knappen **"+ LEGG TIL KORT"**.
+3.  Scroll helt ned og velg korttypen **"Manuell"**.
+
+Gjenta steg 2 og 3 for hver av filene under:
+
+**Kort 1: Hovedkontrollpanelet**
+*   Åpne filen `Custom button-card.yaml` i repositoriet.
+*   Kopier **alt** innholdet.
+*   Lim det inn i kode-editoren i det manuelle kortet.
+*   Klikk **"LAGRE"**. Du skal nå se alle knappene og alarmer.
+
+**Kort 2: Termostat-kontroll**
+*   Legg til et nytt "Manuell"-kort.
+*   Åpne filen `thermostat.yaml`.
+*   Kopier innholdet og lim det inn.
+*   Klikk **"LAGRE"**.
+
+**Kort 3: Sensor-entiteter**
+*   Legg til et tredje "Manuell"-kort.
+*   Åpne filen `type entities.yaml`.
+*   Kopier innholdet og lim det inn.
+*   Klikk **"LAGRE"**.
+
+Når du er ferdig, kan du klikke "FERDIG" øverst for å avslutte redigering av dashboardet. Du kan fritt flytte rundt på de tre kortene for å få den layouten du foretrekker.
 
 ### Trinn 2.5: Importer Node-RED Flow
 
@@ -103,18 +133,20 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 *   **`systemair.yaml`**: Hovedkonfigurasjonen for Home Assistant ("package").
 *   **`flows.json`**: Node-RED-flyt for automasjon.
-*   **`Custom button-card.yaml`**: Hovedfilen for Lovelace-dashboardet.
-*   **`thermostat.yaml` / `type entities.yaml`**: Støttefiler for dashboardet.
+*   **`Custom button-card.yaml`**: Hovedfilen for Lovelace-dashboardet med knapper og kontroller.
+*   **`thermostat.yaml`**: Koden for termostat-kortet.
+*   **`type entities.yaml`**: Koden for listen med sensorverdier.
 *   **`/image`**: Skjermbilder og diagrammer brukt i denne guiden.
 
 ## Anerkjennelser og Credits
 Dette prosjektet hadde ikke vært mulig uten arbeidet til andre i Home Assistant-miljøet.
 *   Kjernekonfigurasjonen (`systemair.yaml`) er basert på det fantastiske arbeidet gjort av **@Ztaeyn**. Hans repositorium [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) var det avgjørende startpunktet.
-*   Den detaljerte guiden for fysisk installasjon og konfigurasjon av Elfin EW11 er publisert på [domotics.no](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus), og skrevet av Mads Nedrehagen.
+*   Den detaljerte guiden for fysisk installasjon og konfigurasjon av Elfin EW11 er publisert på [domotics.no](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus) og skrevet av Mads Nedrehagen.
 *   Prosjektet er videreutviklet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer og rydde i `README.md`.
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
 
