@@ -9,7 +9,7 @@ Dette repositoriet inneholder en komplett konfigurasjon for å integrere og styr
 *   **Full modus-styring:** Kontroller alle moduser som Auto, Manuell (Lav, Normal, Høy), Party, Boost, Borte, Ferie og Stopp.
 *   **Detaljerte sensorer:** Leser av temperaturer, fuktighet, viftehastigheter, varmegjenvinning og alarmer.
 *   **Temperaturkontroll:** Fungerer som en termostat for å justere ønsket inntakstemperatur.
-*   **Avansert automasjon:** Bruker Node-RED til å justere viftehastigheten automatisk basert på fuktighets- og CO2-nivåer.
+*   **Avansert automasjon:** Bruker Node-RED til å justere viftehastigheten automatisk basert på fuktighets- og CO2-nivåer, inkludert nattsenking.
 *   **Tilpasset brukergrensesnitt:** Et funksjonelt Lovelace-dashboard bygget med `custom:button-card` og Mushroom Cards.
 *   **Alarm-overvåking:** Viser status på A-, B-, C- og filter-alarmer.
 
@@ -47,11 +47,7 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 1.  **Finn Modbus- og strøm-porten:** På hovedkortet til VTR-500, finn terminalen for ekstern kommunikasjon, merket med `A(+)`, `B(-)`, `24V` og `GND`.
     ![Koblingsskjema VTR-500](image/koblingsskjemaVTR-500.png)
-2.  **Koble til Elfin EW11:**
-    *   Koble `A+` fra anlegget til `A` på EW11.
-    *   Koble `B-` fra anlegget til `B` på EW11.
-    *   Koble `24V` fra anlegget til `+` (Power Supply) på EW11.
-    *   Koble `GND` fra anlegget til `-` (Power Supply) på EW11.
+2.  **Koble til Elfin EW11:** Koble ledningene som vist i diagrammet under.
     ![Koblingsskjema EW11](image/koblings%20skjema%20EW11.png)
 3.  **Gjenopprett strømmen:** Når alt er trygt koblet, slå på strømmen til anlegget.
 
@@ -62,17 +58,11 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 3.  **Koble til ditt Wi-Fi:** Under "System Settings" -> "WiFi Settings", sett "Wifi Mode" til "STA", finn ditt hjemmenettverk, skriv inn passord og lagre.
     ![System Settings EW11](image/system%20settings%20EW11.png)
 4.  **Restart og finn ny IP:** Enheten vil restarte. Finn den nye IP-adressen den har fått (sjekk i ruteren din) og sett en statisk IP for den.
-5.  **Konfigurer serieport:** Logg inn på den nye IP-adressen. Gå til "Serial Port Settings" og sett:
-    *   **Baud Rate:** `115200`
-    *   **Data Bit:** `8`
-    *   **Parity:** `Even`
-    *   **Protocol:** `Modbus`
+5.  **Konfigurer serieport:** Logg inn på den nye IP-adressen. Gå til "Serial Port Settings" og sett verdiene som vist under.
     ![Serial Port Settings EW11](image/serial%20port%20settings%20EW11.png)
-6.  **Konfigurer kommunikasjon:** Gå til "Communication Settings" og legg til en ny profil med:
-    *   **Protocol:** `Tcp Server`
-    *   **Local Port:** `502`
+6.  **Konfigurer kommunikasjon:** Gå til "Communication Settings" og legg til en ny profil som vist under.
     ![Communication Settings EW11](image/communication%20settings%20EW11.png)
-7.  **Verifiser:** Gå til "Status"-siden. Telleverk for datapakker skal nå øke, som bekrefter at kommunikasjonen fungerer.
+7.  **Verifiser:** Gå til "Status"-siden. Telleverk for datapakker skal nå øke.
     ![Kommunikasjon EW11](image/kommunikasjon%20EW11.png)
 
 ### Trinn 2.3: Konfigurasjon i Home Assistant
@@ -88,37 +78,17 @@ Dette er en trinnvis guide som tar deg fra fysisk installasjon til ferdig automa
 
 ### Trinn 2.4: Sett opp Lovelace Dashboard
 
-Dashboardet gir deg den visuelle kontrollen over anlegget. For at det skal fungere, må du ha installert de nødvendige HACS-kortene nevnt under "Krav" (`Mushroom`, `button-card`, `numberbox-card`).
-
-Konfigurasjonen er delt opp i tre separate filer for enklere håndtering. Du må legge til **tre separate "Manuell"-kort** på dashboardet ditt, ett for hver fil.
+Dashboardet gir deg den visuelle kontrollen over anlegget. For at det skal fungere, må du ha installert de nødvendige HACS-kortene nevnt under "Krav". Konfigurasjonen er delt opp i tre separate filer. Du må legge til **tre separate "Manuell"-kort** på dashboardet ditt, ett for hver fil.
 
 **Slik gjør du det:**
 
-1.  Naviger til dashboardet du vil bruke i Home Assistant, og klikk på de tre prikkene øverst til høyre for å velge **"Rediger dashboard"**.
-2.  Klikk på den blå knappen **"+ LEGG TIL KORT"**.
-3.  Scroll helt ned og velg korttypen **"Manuell"**.
-
-Gjenta steg 2 og 3 for hver av filene under:
-
-**Kort 1: Hovedkontrollpanelet**
-*   Åpne filen `Custom button-card.yaml` i repositoriet.
-*   Kopier **alt** innholdet.
-*   Lim det inn i kode-editoren i det manuelle kortet.
-*   Klikk **"LAGRE"**. Du skal nå se alle knappene og alarmer.
-
-**Kort 2: Termostat-kontroll**
-*   Legg til et nytt "Manuell"-kort.
-*   Åpne filen `thermostat.yaml`.
-*   Kopier innholdet og lim det inn.
-*   Klikk **"LAGRE"**.
-
-**Kort 3: Sensor-entiteter**
-*   Legg til et tredje "Manuell"-kort.
-*   Åpne filen `type entities.yaml`.
-*   Kopier innholdet og lim det inn.
-*   Klikk **"LAGRE"**.
-
-Når du er ferdig, kan du klikke "FERDIG" øverst for å avslutte redigering av dashboardet. Du kan fritt flytte rundt på de tre kortene for å få den layouten du foretrekker.
+1.  Gå til dashboardet ditt og velg **"Rediger dashboard"**.
+2.  Klikk **"+ LEGG TIL KORT"**, og velg korttypen **"Manuell"**.
+3.  Gjenta prosessen for hver av filene under, ved å kopiere innholdet fra hver fil inn i et nytt "Manuell"-kort.
+    *   **Kort 1:** `Custom button-card.yaml` (Hovedkontrollpanelet)
+    *   **Kort 2:** `thermostat.yaml` (Termostat-kontroll)
+    *   **Kort 3:** `type entities.yaml` (Sensor-entiteter)
+4.  Lagre hvert kort og arranger dem som du ønsker.
 
 ### Trinn 2.5: Importer Node-RED Flow
 
@@ -127,25 +97,38 @@ Når du er ferdig, kan du klikke "FERDIG" øverst for å avslutte redigering av 
 3.  Klikk "Deploy".
     ![Node-RED Flow](image/Node-Red%20VTR500.png)
 
+### Bonus: Hvordan Nattsenking Fungerer
+
+Node-RED-flyten inneholder en innebygd logikk for nattsenking for å spare energi og redusere støy om natten. Når den aktiveres, senker den innstilte temperaturen med ca. 3 grader og setter viftehastigheten til "Lav".
+
+**Viktig:** Denne funksjonen aktiveres ikke av seg selv. Den styres av en `switch`-entitet i Home Assistant som heter `switch.nattsenking_ventilasjon_pa`.
+
+For å bruke denne funksjonen, må du selv lage en automasjon eller et skript som slår på denne bryteren. Eksempler:
+*   **Via stemmestyring:** "Hey Google, aktiver nattmodus".
+*   **Via en Home Assistant-automasjon:** Slå på bryteren på et fast tidspunkt.
+*   **Via en knapp på dashboardet.**
+
+Automasjonen vil automatisk gjenopprette normal drift kl. **04:00 på ukedager** og kl. **06:00 i helger**.
+
 ---
 
 ## Filforklaring
 
 *   **`systemair.yaml`**: Hovedkonfigurasjonen for Home Assistant ("package").
 *   **`flows.json`**: Node-RED-flyt for automasjon.
-*   **`Custom button-card.yaml`**: Hovedfilen for Lovelace-dashboardet med knapper og kontroller.
+*   **`Custom button-card.yaml`**: Koden for hovedkontrollpanelet.
 *   **`thermostat.yaml`**: Koden for termostat-kortet.
 *   **`type entities.yaml`**: Koden for listen med sensorverdier.
 *   **`/image`**: Skjermbilder og diagrammer brukt i denne guiden.
 
 ## Anerkjennelser og Credits
-Dette prosjektet hadde ikke vært mulig uten arbeidet til andre i Home Assistant-miljøet.
-*   Kjernekonfigurasjonen (`systemair.yaml`) er basert på det fantastiske arbeidet gjort av **@Ztaeyn**. Hans repositorium [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) var det avgjørende startpunktet.
-*   Den detaljerte guiden for fysisk installasjon og konfigurasjon av Elfin EW11 er publisert på [domotics.no](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus) og skrevet av Mads Nedrehagen.
-*   Prosjektet er videreutviklet og vedlikeholdt av @Howard0000. En KI-assistent har hjulpet til med å forenkle forklaringer og rydde i `README.md`.
+*   Kjernekonfigurasjonen (`systemair.yaml`) er basert på arbeidet til **@Ztaeyn** i hans [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) repositorium.
+*   Guiden for installasjon er publisert på [domotics.no](https://www.domotics.no/post/home-assistant-automasjon-av-ventilasjonsanlegg-via-modbus) og skrevet av Mads Nedrehagen.
+*   Prosjektet er videreutviklet av @Howard0000. En KI-assistent har hjulpet til med å rydde i `README.md`.
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
 
