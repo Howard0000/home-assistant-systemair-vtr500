@@ -1,5 +1,7 @@
 # Home Assistant-integrasjon for Systemair SAVE VTR-500
 
+> [Read this guide in English](README.md)
+
 Dette repositoriet inneholder en komplett konfigurasjon for å integrere og styre en Systemair SAVE VTR-500 ventilasjonsenhet med Home Assistant via Modbus TCP.
 
 ![Lovelace Dashboard](image/Ventilasjon%20kort.png)
@@ -128,6 +130,7 @@ Automasjonen vil automatisk gjenopprette normal drift kl. **04:00 på ukedager**
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
 
