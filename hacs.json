@@ -1,0 +1,6 @@
+{
+  "name": "Systemair VTR-500 Control Package",
+  "render_readme": true,
+  "country": ["NO", "SE", "DK", "DE", "GB", "NL"],
+  "homeassistant": "2023.1.0"
+}
