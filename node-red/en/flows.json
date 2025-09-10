@@ -1,0 +1,3453 @@
+[
+    {
+        "id": "3a2b5baa27473edb",
+        "type": "tab",
+        "label": "Ventilation Automation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d4b56ba5090c17f5",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Control",
+        "info": "",
+        "x": 150,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "e8e335626f3c6ca0",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "120",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "cb059af84bcc149b"
+            ]
+        ]
+    },
+    {
+        "id": "954f46b8e51383bf",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Speed Control - Weekdays (starts 06:00)",
+        "info": "",
+        "x": 230,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "cb059af84bcc149b",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Speed Weekday",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "e70562e43af1515e",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 360,
+        "y": 220,
+        "wires": [
+            [
+                "520b9aaa58206f29"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e62e1d5e933987b5",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "120",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 520,
+        "wires": [
+            [
+                "c656747ec961c43e"
+            ]
+        ]
+    },
+    {
+        "id": "f38563cfb7c0f3fd",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Speed Control - Weekend (starts 09:00)",
+        "info": "",
+        "x": 200,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "c656747ec961c43e",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Speed Weekend",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "42e5a7e1748b874a",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 350,
+        "y": 520,
+        "wires": [
+            [
+                "36d5b1680fef92b2"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "520b9aaa58206f29",
+        "type": "weekday-gate",
+        "z": "3a2b5baa27473edb",
+        "name": "Weekdays",
+        "weekdays": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+        ],
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "1460e062afe18338"
+            ]
+        ]
+    },
+    {
+        "id": "36d5b1680fef92b2",
+        "type": "weekday-gate",
+        "z": "3a2b5baa27473edb",
+        "name": "Weekend",
+        "weekdays": [
+            "6",
+            "0"
+        ],
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "352c13f16a9b41da"
+            ]
+        ]
+    },
+    {
+        "id": "eeb1cb89c6f47956",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "65",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "66",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 990,
+        "y": 220,
+        "wires": [
+            [
+                "29018f34f5752902"
+            ],
+            [
+                "f06b353796facefb"
+            ]
+        ]
+    },
+    {
+        "id": "f06b353796facefb",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1230,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "af6506dfe4b08ba9",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1220,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "858cbd413a4e592d",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1230,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1460e062afe18338",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Laundry Room",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_vaskerom_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 810,
+        "y": 220,
+        "wires": [
+            [
+                "eeb1cb89c6f47956"
+            ]
+        ]
+    },
+    {
+        "id": "7ca680384e4633e3",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "65",
+                "vt": "str"
+            },
+            {
+                "t": "gte",
+                "v": "66",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 990,
+        "y": 520,
+        "wires": [
+            [
+                "51e27d5035e81738"
+            ],
+            [
+                "c88e2e1fe5b8673a"
+            ]
+        ]
+    },
+    {
+        "id": "c88e2e1fe5b8673a",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1230,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b99be05d2422fbc6",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1220,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6801f6675ddb163",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1230,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "352c13f16a9b41da",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Laundry Room",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_vaskerom_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 810,
+        "y": 520,
+        "wires": [
+            [
+                "7ca680384e4633e3"
+            ]
+        ]
+    },
+    {
+        "id": "463f6a6ce4b9a457",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "55",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "55",
+                "vt": "num",
+                "v2": "57",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "57",
+                "vt": "num",
+                "v2": "60",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "60",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1430,
+        "y": 220,
+        "wires": [
+            [
+                "c3c33280144c9249"
+            ],
+            [
+                "1fc0c1555038a850"
+            ],
+            [
+                "e4229958f6a18cf1"
+            ],
+            [
+                "401a4b15765a869e"
+            ]
+        ]
+    },
+    {
+        "id": "85ed0b446917bc2e",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "800",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "801",
+                "vt": "num",
+                "v2": "899",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "900",
+                "vt": "num",
+                "v2": "1199",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "1200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 2310,
+        "y": 220,
+        "wires": [
+            [
+                "24eb7c97290cc3ba"
+            ],
+            [
+                "7e817de21d536a67"
+            ],
+            [
+                "5128f1610766f710"
+            ],
+            [
+                "5f78c24f1a512293"
+            ]
+        ]
+    },
+    {
+        "id": "1fc0c1555038a850",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1680,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4229958f6a18cf1",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1660,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "401a4b15765a869e",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1670,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "db1f8d56906d0e9c",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2130,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cbaf3a8ffad9fad8",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2120,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8f95b36838557cd3",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2130,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "24eb7c97290cc3ba",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Low",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_low_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2540,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e817de21d536a67",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2550,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5128f1610766f710",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2540,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f78c24f1a512293",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2550,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "29018f34f5752902",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Guest Bathroom",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_gjestebad_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1240,
+        "y": 220,
+        "wires": [
+            [
+                "463f6a6ce4b9a457"
+            ]
+        ]
+    },
+    {
+        "id": "c3c33280144c9249",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Main Bathroom",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_bad_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1660,
+        "y": 220,
+        "wires": [
+            [
+                "0af7efd486a58cd8"
+            ]
+        ]
+    },
+    {
+        "id": "8d5b483b33bff969",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "CO2 Living Room",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.soverom_stue_karbondioksid",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2100,
+        "y": 220,
+        "wires": [
+            [
+                "85ed0b446917bc2e"
+            ]
+        ]
+    },
+    {
+        "id": "e336ca9465ec197a",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "800",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "801",
+                "vt": "num",
+                "v2": "899",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "900",
+                "vt": "num",
+                "v2": "1199",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "1200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 2310,
+        "y": 520,
+        "wires": [
+            [
+                "9d07c9d650891ba2"
+            ],
+            [
+                "3590aabc990ffb04"
+            ],
+            [
+                "1016f1c8fd3fcae1"
+            ],
+            [
+                "4a0469d31e2d3bbf"
+            ]
+        ]
+    },
+    {
+        "id": "7c143f56d94c3f2b",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1670,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "85d6e83be8b4b006",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1660,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f81cd6d94ed3cc0",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1670,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec8b0bf7115ccd03",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2130,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "47d96040c0ec265b",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2120,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e89e113104d6a63f",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2130,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d07c9d650891ba2",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Low",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_low_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2540,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3590aabc990ffb04",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2550,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1016f1c8fd3fcae1",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2540,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a0469d31e2d3bbf",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 2550,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "51e27d5035e81738",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Guest Bathroom",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_gjestebad_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1240,
+        "y": 520,
+        "wires": [
+            [
+                "c2beb2a1d0906847"
+            ]
+        ]
+    },
+    {
+        "id": "9d8a5581d72086a8",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Humidity Main Bathroom",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.temperatur_og_fuktighet_sensor_bad_humidity",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1660,
+        "y": 520,
+        "wires": [
+            [
+                "f4af05cfec81121a"
+            ]
+        ]
+    },
+    {
+        "id": "16b17f31cc55a013",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "CO2 Living Room",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "sensor.soverom_stue_karbondioksid",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 2100,
+        "y": 520,
+        "wires": [
+            [
+                "e336ca9465ec197a"
+            ]
+        ]
+    },
+    {
+        "id": "85a209285b2b7c51",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f052b3fcf42ee22c",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "78f52df7de4665dd",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f2108a6a2e47178",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "047eebc099cfc36e",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "17d89af001ea4799",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d59487bfd5436700",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Normal",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_normal_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3170,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "11a11822a7ea392f",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation High",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_high_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3160,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cad402167224dacd",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Boost",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_refresh_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3170,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b5643e2caf481247",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Low",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_low_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3160,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e6954c40a2c2945f",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Fireplace",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_fireplace_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3170,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d894463ff494ed67",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Holiday",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": false,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_holiday_mode"
+        ],
+        "data": "",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3170,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a56567d3d1b5484c",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Away",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_away_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 3170,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c25dfec21a02f3a",
+        "type": "inject",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 2890,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dea186b38901a3f0",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Night Setback - Temperature",
+        "info": "",
+        "x": 220,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "478de1124c29939c",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Night Setback - On",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "4f7739f3881750cb",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 170,
+        "y": 1140,
+        "wires": [
+            [
+                "c9d04752e45e998f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "53fec862f6a7c11e",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Get Ventilation Temperature",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "$entity().attributes.temperatur",
+        "halt_if_type": "jsonata",
+        "halt_if_compare": "jsonata",
+        "entity_id": "sensor.vtr500_supply_air_sp",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1220,
+        "y": 1140,
+        "wires": [
+            [],
+            [
+                "ce39d1857b4da561"
+            ]
+        ]
+    },
+    {
+        "id": "ce39d1857b4da561",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "25",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "24",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "23",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "22",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "21",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "20",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "19",
+                "vt": "str"
+            },
+            {
+                "t": "lt",
+                "v": "19",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 8,
+        "x": 1410,
+        "y": 1140,
+        "wires": [
+            [
+                "3a100c55ca698425"
+            ],
+            [
+                "78e9f80a5c6c118d"
+            ],
+            [
+                "d90622b968c57386"
+            ],
+            [
+                "d54a19ce70066f2e"
+            ],
+            [
+                "4a07cd94a25bd789"
+            ],
+            [
+                "640f6b1df2434ba5"
+            ],
+            [
+                "a32aed7f6719852e"
+            ],
+            [
+                "a32aed7f6719852e"
+            ]
+        ]
+    },
+    {
+        "id": "d90622b968c57386",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 20°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":20}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d54a19ce70066f2e",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 19°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":19}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a07cd94a25bd789",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 18°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":18}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "640f6b1df2434ba5",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 17°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":17}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "78e9f80a5c6c118d",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 21°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":21}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a100c55ca698425",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 22°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":22}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a32aed7f6719852e",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 16°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":16}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c9d04752e45e998f",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Low",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_low_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 960,
+        "y": 1140,
+        "wires": [
+            [
+                "53fec862f6a7c11e"
+            ]
+        ]
+    },
+    {
+        "id": "c6fe4dbff06aa494",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Override Ventilation Speed",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "5c2e90bee5b6b9d2",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 840,
+        "wires": [
+            [
+                "c6fd4a096322ec8b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "c6fd4a096322ec8b",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Low",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "script",
+        "service": "turn_on",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "script.vtr500_man_low_mode"
+        ],
+        "data": "",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 500,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "99a901e96d55bb81",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Override Ventilation Speed",
+        "info": "",
+        "x": 180,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "354e475343c697ca",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Temperature Control - Weekdays (from 04:00)",
+        "info": "",
+        "x": 260,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "7f41a3ba405f15e3",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Temp Weekday OFF",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "8c89ea380cb3b6d9",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 200,
+        "y": 1660,
+        "wires": [
+            [
+                "f23f756b3374709a"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2a11b4bec654da01",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Get Ventilation Temperature",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "$entity().attributes.temperatur",
+        "halt_if_type": "jsonata",
+        "halt_if_compare": "jsonata",
+        "entity_id": "sensor.vtr500_supply_air_sp",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1220,
+        "y": 1660,
+        "wires": [
+            [],
+            [
+                "703076394053fa4c"
+            ]
+        ]
+    },
+    {
+        "id": "703076394053fa4c",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "22",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "21",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "20",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "19",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "18",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "17",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "16",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 7,
+        "x": 1410,
+        "y": 1660,
+        "wires": [
+            [
+                "38b184469d050889"
+            ],
+            [
+                "568cfb2a76f8966b"
+            ],
+            [
+                "4f8bcdc5a28ee74d"
+            ],
+            [
+                "c86d2aa35f4b5371"
+            ],
+            [
+                "26eba5224942c8b4"
+            ],
+            [
+                "bf45afce6462df2d"
+            ],
+            [
+                "d7f865a4b84b28aa"
+            ]
+        ]
+    },
+    {
+        "id": "4f8bcdc5a28ee74d",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 23°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":23}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c86d2aa35f4b5371",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 22°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":22}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26eba5224942c8b4",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 21°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":21}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf45afce6462df2d",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 20°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":20}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "568cfb2a76f8966b",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 24°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":24}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38b184469d050889",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 25°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":25}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7f865a4b84b28aa",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 19°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":19}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f23f756b3374709a",
+        "type": "weekday-gate",
+        "z": "3a2b5baa27473edb",
+        "name": "Weekdays",
+        "weekdays": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+        ],
+        "x": 640,
+        "y": 1660,
+        "wires": [
+            [
+                "2a11b4bec654da01"
+            ]
+        ]
+    },
+    {
+        "id": "e0ab157c60375288",
+        "type": "comment",
+        "z": "3a2b5baa27473edb",
+        "name": "Temperature Control - Weekend (from 06:00)",
+        "info": "",
+        "x": 250,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "7f2cd37dea134daf",
+        "type": "ha-switch",
+        "z": "3a2b5baa27473edb",
+        "name": "Ventilation Temp Weekend OFF",
+        "version": 0,
+        "debugenabled": false,
+        "inputs": 1,
+        "outputs": 2,
+        "entityConfig": "b97116752d561aa6",
+        "enableInput": true,
+        "outputOnStateChange": true,
+        "outputProperties": [
+            {
+                "property": "outputType",
+                "propertyType": "msg",
+                "value": "state change",
+                "valueType": "str"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "x": 190,
+        "y": 2140,
+        "wires": [
+            [
+                "0282aa2d7c54ae78"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "384c36a1233d518e",
+        "type": "api-current-state",
+        "z": "3a2b5baa27473edb",
+        "name": "Get Ventilation Temperature",
+        "server": "e0b69443184f83d9",
+        "version": 3,
+        "outputs": 2,
+        "halt_if": "$entity().attributes.temperatur",
+        "halt_if_type": "jsonata",
+        "halt_if_compare": "jsonata",
+        "entity_id": "sensor.vtr500_supply_air_sp",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entity"
+            },
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            }
+        ],
+        "for": "0",
+        "forType": "num",
+        "forUnits": "minutes",
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 1220,
+        "y": 2140,
+        "wires": [
+            [],
+            [
+                "fc0530bc9f4f451f"
+            ]
+        ]
+    },
+    {
+        "id": "fc0530bc9f4f451f",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "22",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "21",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "20",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "19",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "18",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "17",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "16",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 7,
+        "x": 1410,
+        "y": 2140,
+        "wires": [
+            [
+                "9c587de73f03d6de"
+            ],
+            [
+                "6671d693dbe3ccec"
+            ],
+            [
+                "c04b48483a99cf70"
+            ],
+            [
+                "e7e7cf5fae2345bc"
+            ],
+            [
+                "6848b3b3cb5acdd4"
+            ],
+            [
+                "0bd87aaea4802372"
+            ],
+            [
+                "42b5235c751bb219"
+            ]
+        ]
+    },
+    {
+        "id": "c04b48483a99cf70",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 23°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":23}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e7e7cf5fae2345bc",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 22°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":22}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6848b3b3cb5acdd4",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 21°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":21}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0bd87aaea4802372",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 20°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":20}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6671d693dbe3ccec",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 24°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":24}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c587de73f03d6de",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 25°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":25}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 1980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "42b5235c751bb219",
+        "type": "api-call-service",
+        "z": "3a2b5baa27473edb",
+        "name": "Set Temperature: 19°C",
+        "server": "e0b69443184f83d9",
+        "version": 5,
+        "debugenabled": true,
+        "domain": "climate",
+        "service": "set_temperature",
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "climate.vent_vtr500"
+        ],
+        "data": "{\"temperature\":19}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "x": 1810,
+        "y": 2340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0282aa2d7c54ae78",
+        "type": "weekday-gate",
+        "z": "3a2b5baa27473edb",
+        "name": "Weekend",
+        "weekdays": [
+            "6",
+            "0"
+        ],
+        "x": 610,
+        "y": 2140,
+        "wires": [
+            [
+                "384c36a1233d518e"
+            ]
+        ]
+    },
+    {
+        "id": "c2beb2a1d0906847",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "55",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "55",
+                "vt": "num",
+                "v2": "57",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "57",
+                "vt": "num",
+                "v2": "60",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "60",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1430,
+        "y": 520,
+        "wires": [
+            [
+                "9d8a5581d72086a8"
+            ],
+            [
+                "7c143f56d94c3f2b"
+            ],
+            [
+                "85d6e83be8b4b006"
+            ],
+            [
+                "2f81cd6d94ed3cc0"
+            ]
+        ]
+    },
+    {
+        "id": "0af7efd486a58cd8",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "55",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "55",
+                "vt": "num",
+                "v2": "57",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "57",
+                "vt": "num",
+                "v2": "60",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "60",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1890,
+        "y": 220,
+        "wires": [
+            [
+                "8d5b483b33bff969"
+            ],
+            [
+                "db1f8d56906d0e9c"
+            ],
+            [
+                "cbaf3a8ffad9fad8"
+            ],
+            [
+                "8f95b36838557cd3"
+            ]
+        ]
+    },
+    {
+        "id": "f4af05cfec81121a",
+        "type": "switch",
+        "z": "3a2b5baa27473edb",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "55",
+                "vt": "str"
+            },
+            {
+                "t": "btwn",
+                "v": "55",
+                "vt": "num",
+                "v2": "57",
+                "v2t": "num"
+            },
+            {
+                "t": "btwn",
+                "v": "57",
+                "vt": "num",
+                "v2": "60",
+                "v2t": "num"
+            },
+            {
+                "t": "gte",
+                "v": "60",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 1890,
+        "y": 520,
+        "wires": [
+            [
+                "16b17f31cc55a013"
+            ],
+            [
+                "ec8b0bf7115ccd03"
+            ],
+            [
+                "47d96040c0ec265b"
+            ],
+            [
+                "e89e113104d6a63f"
+            ]
+        ]
+    },
+    {
+        "id": "e70562e43af1515e",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "",
+        "name": "Ventilation Speed Weekday",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Ventilation Speed Weekday"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "42e5a7e1748b874a",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "",
+        "name": "Ventilation Speed Weekend",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Ventilation Speed Weekend"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "e0b69443184f83d9",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": "30",
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "h23",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": false
+    },
+    {
+        "id": "4f7739f3881750cb",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "1b5db988643597b2",
+        "name": "Night Setback Ventilation On",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Night Setback Ventilation On"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "5c2e90bee5b6b9d2",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "",
+        "name": "Override Ventilation Speed",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Override Ventilation Speed"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "8c89ea380cb3b6d9",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "",
+        "name": "Ventilation Temp Weekday OFF",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Ventilation Temp Weekday OFF"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "b97116752d561aa6",
+        "type": "ha-entity-config",
+        "server": "e0b69443184f83d9",
+        "deviceConfig": "",
+        "name": "Ventilation Temp Weekend OFF",
+        "version": "6",
+        "entityType": "switch",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Ventilation Temp Weekend OFF"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "1b5db988643597b2",
+        "type": "ha-device-config",
+        "name": "",
+        "hwVersion": "",
+        "manufacturer": "Node-RED",
+        "model": "",
+        "swVersion": ""
+    }
+]
