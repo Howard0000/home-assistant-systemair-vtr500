@@ -1,0 +1,18 @@
+type: entities
+entities:
+  - entity: sensor.vtr500_supply_temperature
+    name: Supply Temperature
+  - entity: sensor.vtr500_exhaust_temperature
+    name: Exhaust Temperature
+  - entity: sensor.vtr500_heat_recovery
+    name: Heat Recovery
+  - entity: sensor.vtr500_summer_winter_operational_status
+    name: Active Season
+  - entity: sensor.vtr500_time_to_filter_change_months
+    name: Next Filter Change
+  - entity: sensor.vtr500_outdoor_temperature
+    name: Outdoor Temperature
+  - entity: sensor.vtr500_exhaust_air_rf
+  - entity: sensor.vtr500_supply_air_rf
+  - entity: sensor.vtr500_calculated_moisture_extraction
+  - entity: sensor.vtr500_calculated_moisture_intake
