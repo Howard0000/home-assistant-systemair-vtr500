@@ -1,0 +1,1843 @@
+################################################################################
+# Modbus on SYSTEMAIR SAVE_VTR_500
+################################################################################
+modbus:
+  - name: vtr500
+    # See https://www.home-assistant.io/integrations/modbus/
+    type: tcp           #User setting
+    host: 192.168.1.161 #User setting
+    port: 502          #User setting
+    timeout: 10          #Timeout for slave response in seconds (default=3)
+    delay: 3            #Time to sleep in seconds after connecting and before sending messages (defualt=0)
+    #message_wait_milliseconds: 50 #Increased to hopefully reduce errors in my serial comm (Default:30 for serial connection, 0 for all other connections.)
+
+
+    climates:
+      - name: vent_vtr500
+        unique_id: vent_vtr500
+        address: 12102
+        slave: 1
+        scale: 0.1
+        offset: 0
+        precision: 1
+        max_temp: 30
+        min_temp: 15
+        temp_step: 1
+        target_temp_register: 2000
+
+    sensors:
+# All addresses are a number lower than value in MODBUS variable list
+      - name: vtr500_outdoor_temperature
+        unique_id: vtr500_outdoor_temperature
+        ##hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 12101
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+
+ # Removed due to HA2024.3 not allowing duplicate use of address. Replaced with template sensor under # SENSORS.
+ #     - name: vtr500_supply_temperature
+ #       unique_id: vtr500_supply_temperature
+ #       ##hub: vtr500
+ #       device_class: temperature
+ #       slave: 1
+ #       address: 12102
+ #       input_type: holding
+ #       unit_of_measurement: °C
+ #       scale: 0.1
+ #       offset: 0
+ #       precision: 1
+ #       data_type: int16
+
+      - name: vtr500_exhaust_temperature
+        unique_id: vtr500_exhaust_temperature
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 12543 #2050   #NB!EAT/RAT used for extract air controller
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_efficiency_temperature
+        unique_id: vtr500_efficiency_temperature
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 12106
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_overheat_temperature
+        unique_id: vtr500_overheat_temperature
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 12107
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_relative_moisture_extraction
+        unique_id: vtr500_relative_moisture_extraction
+        #hub: vtr500
+        device_class: humidity
+        slave: 1
+        address: 12135
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_calculated_moisture_extraction
+        unique_id: vtr500_calculated_moisture_extraction
+        #hub: vtr500
+        device_class: humidity
+        slave: 1
+        address: 2210
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_calculated_moisture_intake
+        unique_id: vtr500_calculated_moisture_intake
+        #hub: vtr500
+        device_class: humidity
+        slave: 1
+        address: 2211
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_supply_air_fan
+        unique_id: vtr500_supply_air_fan_pwr_fact
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 14000
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_extractor_fan
+        unique_id: vtr500_extractor_fan_pwr_fact
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 14001
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_summer_winter_operation #Actual seasson for Demand Control: 0: Summer,1: Winter
+        unique_id: vtr500_summer_winter_operation_1_0
+        #hub: vtr500
+        slave: 1
+        address: 1038
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_extractor_hood_pressure_switch_off_on
+        unique_id: vtr500_digital_ui_1
+        #hub: vtr500
+        slave: 1
+        address: 12020
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_TRIAC_after_manual_override #PWM TRIAC after manual override
+        unique_id: vtr500_triac_after_manual_override
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 2148
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_TRIAC_control_signal_on_off #TRIAC Control signal
+        unique_id: vtr500_triac_control_signal
+        #hub: vtr500
+        slave: 1
+        address: 14380
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_heat_recovery
+        unique_id: vtr500_heat_recovery
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 14102
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_filter_replacement_alarm
+        unique_id: vtr500_filter_replacement_alarm
+        #hub: vtr500
+        slave: 1
+        address: 7006
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_filter_replacement_period_months
+        unique_id: vtr500_filter_replacement_period
+        #hub: vtr500
+        slave: 1
+        address: 7000
+        input_type: holding
+        unit_of_measurement: "months"
+        data_type: int16
+      - name: vtr500_time_to_filter_replacement_s
+        unique_id: vtr500_time_to_filter_replacement
+        #hub: vtr500
+        slave: 1
+        address: 7005
+        input_type: holding
+        unit_of_measurement: "s"
+        data_type: uint32
+      - name: vtr500_mode_status_register
+        unique_id: vtr500_mode_status_register
+        #hub: vtr500
+        slave: 1
+        address: 1160 #Active User mode.0: Auto,1: Manual,2: Crowded,3: Refresh,4: Fireplace,5: Away,6: Holiday,7: Cooker Hood,8: Vacuum Cleaner,9: CDI1,10: CDI2,11: CDI3,12: PressureGuard
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_manual_mode_command_register
+        unique_id: vtr500_manual_mode_command_register
+        #hub: vtr500
+        slave: 1
+        address: 1130 #0: Off(1),2: Low,3: Normal,4: High,(1):value Off only allowed if contents of register REG_FAN_MANUAL_STOP_ALLOWED is 1.
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed
+        unique_id: vtr500_saf_speed_rpm
+        #hub: vtr500
+        slave: 1
+        address: 12400
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed
+        unique_id: vtr500_eaf_speed_rpm
+        #hub: vtr500
+        slave: 1
+        address: 12401
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_mode_holiday
+        unique_id: vtr500_saf_speed_holiday
+        #hub: vtr500
+        slave: 1
+        address: 1220
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_mode_holiday
+        unique_id: vtr500_eaf_speed_holiday
+        #hub: vtr500
+        slave: 1
+        address: 1221
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_mode_cooker_hood
+        unique_id: vtr500_saf_speed_cooker_hood
+        #hub: vtr500
+        slave: 1
+        address: 1222
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_mode_cooker_hood
+        unique_id: vtr500_eaf_speed_cooker_hood
+        #hub: vtr500
+        slave: 1
+        address: 1223
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_mode_vacuumcleaner
+        unique_id: vtr500_saf_speed_vacuumcleaner
+        #hub: vtr500
+        slave: 1
+        address: 1224
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_mode_vacuumcleaner
+        unique_id: vtr500_eaf_speed_vacuumcleaner
+        #hub: vtr500
+        slave: 1
+        address: 1225
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_low_rpm
+        unique_id: vtr500_saf_speed_low_rpm
+        #hub: vtr500
+        slave: 1
+        address: 1412
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_low_rpm
+        unique_id: vtr500_eaf_speed_low_rpm
+        #hub: vtr500
+        slave: 1
+        address: 1413
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_minimum_rpm
+        unique_id: vtr500_saf_speed_minimum_rpm
+        #hub: vtr500
+        slave: 1
+        address: 1410
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_minimum_rpm
+        unique_id: vtr500_eaf_speed_minimum_rpm
+        #hub: vtr500
+        slave: 1
+        address: 1411
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_low
+        unique_id: vtr500_saf_speed_low
+        #hub: vtr500
+        slave: 1
+        address: 1302
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_low
+        unique_id: vtr500_eaf_speed_low
+        #hub: vtr500
+        slave: 1
+        address: 1303
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_normal
+        unique_id: vtr500_saf_speed_normal
+        #hub: vtr500
+        slave: 1
+        address: 1414
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_normal
+        unique_id: vtr500_eaf_speed_normal
+        #hub: vtr500
+        slave: 1
+        address: 1415
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_high
+        unique_id: vtr500_saf_speed_high
+        #hub: vtr500
+        slave: 1
+        address: 1416
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_high
+        unique_id: vtr500_eaf_speed_high
+        #hub: vtr500
+        slave: 1
+        address: 1417
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_supply_air_fan_speed_maximum
+        unique_id: vtr500_saf_speed_maximum
+        #hub: vtr500
+        slave: 1
+        address: 1418
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_exhaust_air_fan_speed_maximum
+        unique_id: vtr500_eaf_speed_maximum
+        #hub: vtr500
+        slave: 1
+        address: 1419
+        input_type: holding
+        unit_of_measurement: rpm
+        data_type: uint16
+      - name: vtr500_fan_manual_stop_allowed_register
+        unique_id: vtr500_fan_manual_stop_allowed_reg
+        #hub: vtr500
+        slave: 1
+        address: 1352
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_supply_air_sp
+        unique_id: vtr500_supply_air_sp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 2000
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_exhaust_air_sp
+        unique_id: vtr500_exhaust_air_sp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 2012
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_exhaust_air_min_sp
+        unique_id: vtr500_exhaust_air_min_sp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 2020
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      - name: vtr500_exhaust_air_max_sp
+        unique_id: vtr500_exhaust_air_max_sp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 2021
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+      # Unit temperature control mode. Requires room temp sensor. 0: Supply,1: Room,2: Extract
+      - name: vtr500_supply_air_room_exhaust_reg
+        unique_id: vtr500_supply_air_room_exhaust_reg
+        #hub: vtr500
+        slave: 1
+        address: 2030
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_eco_heat_offset
+        unique_id: vtr500_eco_heat_offset
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 2503 #Temperature offset for heating during Eco mode
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: uint16
+        scan_interval: 9
+      - name: vtr500_countdown_mode_time_s
+        unique_id: vtr500_countdown_mode_time
+        #hub: vtr500
+        slave: 1
+        address: 1110
+        input_type: input
+        unit_of_measurement: s
+        data_type: uint16
+      - name: vtr500_countdown_mode_time_s_factor
+        #hub: vtr500
+        slave: 1
+        address: 1111
+        input_type: input
+        data_type: uint16
+      - name: vtr500_holiday_mode_duration
+        unique_id: vtr500_holiday_mode_duration
+        #hub: vtr500
+        slave: 1
+        address: 1100
+        input_type: holding
+        unit_of_measurement: days
+        data_type: uint16
+        scan_interval: 9        
+      - name: vtr500_away_mode_duration
+        unique_id: vtr500_away_mode_duration
+        #hub: vtr500
+        slave: 1
+        address: 1101
+        input_type: holding
+        unit_of_measurement: h
+        data_type: uint16
+        scan_interval: 9       
+      - name: vtr500_fireplace_mode_duration
+        unique_id: vtr500_fireplace_mode_duration
+        #hub: vtr500
+        slave: 1
+        address: 1102
+        input_type: holding
+        unit_of_measurement: min
+        data_type: uint16
+        scan_interval: 9        
+      - name: vtr500_refresh_mode_duration
+        unique_id: vtr500_refresh_mode_duration
+        #hub: vtr500
+        slave: 1
+        address: 1103
+        input_type: holding
+        unit_of_measurement: min
+        data_type: uint16
+        scan_interval: 9        
+      - name: vtr500_crowded_mode_duration
+        unique_id: vtr500_crowded_mode_duration
+        #hub: vtr500
+        slave: 1
+        address: 1104
+        input_type: holding
+        unit_of_measurement: h
+        data_type: uint16
+        scan_interval: 9        
+      - name: vtr500_moisture_extraction_sp
+        unique_id: vtr500_moisture_extraction_sp
+        #hub: vtr500
+        device_class: humidity
+        slave: 1
+        address: 2202
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: uint16
+      - name: vtr500_fan_speed_comp_read
+        unique_id: vtr500_fan_speed_comp_read
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 1254
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: int16
+      - name: vtr500_fan_speed_comp_winter
+        unique_id: vtr500_fan_speed_comp_winter
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 1251
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: int16
+      - name: vtr500_fan_speed_comp_winter_start_temp
+        unique_id: vtr500_fan_speed_comp_winter_start_temp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 1255
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+      - name: vtr500_fan_speed_comp_winter_max_temp
+        unique_id: vtr500_fan_speed_comp_winter_max_temp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 1253
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+      - name: vtr500_fan_speed_comp_checked
+        unique_id: vtr500_fan_speed_comp_checked
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 1252
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+      - name: vtr500_fan_speed_comp_summer
+        unique_id: vtr500_fan_speed_comp_summer
+        #hub: vtr500
+        device_class: power_factor
+        slave: 1
+        address: 1258
+        input_type: holding
+        unit_of_measurement: "%"
+        data_type: int16
+      - name: vtr500_fan_speed_comp_summer_start_temp
+        unique_id: vtr500_fan_speed_comp_summer_start_temp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 1256
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+      - name: vtr500_fan_speed_comp_max_temp
+        unique_id: vtr500_fan_speed_comp_max_temp
+        #hub: vtr500
+        device_class: temperature
+        slave: 1
+        address: 1257
+        input_type: holding
+        unit_of_measurement: °C
+        scale: 0.1
+        offset: 0
+        precision: 1
+        data_type: int16
+      - name: vtr500_a_alarm
+        unique_id: vtr500_a_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15900
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_b_alarm
+        unique_id: vtr500_b_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15901
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_c_alarm
+        unique_id: vtr500_c_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15902
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_filter_warning_alarm
+        unique_id: vtr500_filter_warning_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15543
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_filter_alarm
+        unique_id: vtr500_filter_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15141
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_supply_air_temp_low_alarm
+        unique_id: vtr500_supply_air_temp_low_alarm
+        #hub: vtr500
+        slave: 1
+        address: 15176
+        input_type: holding
+        data_type: uint16
+      - name: vtr500_filter_warning_alarm_delay_counter
+        unique_id: vtr500_filter_warning_alarm_delay_counter
+        #hub: vtr500
+        slave: 1
+        address: 15548
+        input_type: holding
+        data_type: uint16
+
+################################################################################
+# INPUT BOOLEAN
+################################################################################
+
+input_boolean:
+  vtr500_auto_mode_status_dummy:
+    name: vtr500 Auto mode status dummy
+    icon: mdi:fan
+  vtr500_crowded_mode_status_dummy:
+    name: vtr500 Crowded mode status dummy
+    icon: mdi:fan
+  vtr500_refresh_mode_status_dummy:
+    name: vtr500 Refresh mode status dummy
+    icon: mdi:fan
+  vtr500_fireplace_mode_status_dummy:
+    name: vtr500 Fireplace mode status dummy
+    icon: mdi:fan
+  vtr500_away_mode_status_dummy:
+    name: vtr500 Away mode status dummy
+    icon: mdi:fan
+  vtr500_holiday_mode_status_dummy:
+    name: vtr500 Holiday mode status dummy
+    icon: mdi:fan
+  vtr500_man_stop_mode_status_dummy:
+    name: vtr500 Manuall stop mode status dummy
+    icon: mdi:fan
+  vtr500_man_low_mode_status_dummy:
+    name: vtr500 Manual Low mode status dummy
+    icon: mdi:fan
+  vtr500_man_normal_mode_status_dummy:
+    name: vtr500 Manual Normal mode status dummy
+    icon: mdi:fan
+  vtr500_man_high_mode_status_dummy:
+    name: vtr500 Manual high mode status dummy
+    icon: mdi:fan
+
+################################################################################
+# INPUT NUMBER
+################################################################################
+
+input_number:
+  vtr500_eco_offset_temp_sp:
+    name: Eco offset
+    min: 0
+    max: 10
+    step: 1
+    mode: slider
+    unit_of_measurement: °C
+    icon: mdi:thermometer
+
+  vtr500_holiday_mode_duration_sp:
+    name: Holiday mode - Desired duration
+    min: 1
+    max: 365
+    step: 1
+    mode: slider
+    unit_of_measurement: days
+    icon: mdi:timelapse
+
+  vtr500_away_mode_duration_sp:
+    name: Away mode - Desired duration
+    min: 1
+    max: 72
+    step: 1
+    mode: slider
+    unit_of_measurement: h
+    icon: mdi:timelapse
+
+  vtr500_refresh_mode_duration_sp:
+    name: Refresh mode - Desired duration
+    min: 1
+    max: 240
+    step: 1
+    mode: slider
+    unit_of_measurement: min
+    icon: mdi:timelapse
+
+  vtr500_crowded_mode_duration_sp:
+    name: Crowded mode - Desired duration
+    min: 1
+    max: 8
+    step: 1
+    mode: slider
+    unit_of_measurement: h
+    icon: mdi:timelapse
+
+  vtr500_fireplace_mode_duration_sp:
+    name: Fireplace mode - Desired duration
+    min: 1
+    max: 60
+    step: 1
+    mode: slider
+    unit_of_measurement: min
+    icon: mdi:timelapse
+
+  vtr500_supply_air_fan_speed_normal_sp:
+    name: Supply air fan speed normal
+    min: 1000
+    max: 3000
+    step: 50
+    mode: slider
+    unit_of_measurement: rpm
+    icon: mdi:fan
+
+  vtr500_exhaust_air_fan_speed_normal_sp:
+    name: Exhaust air fan speed normal
+    min: 1000
+    max: 3000
+    step: 50
+    mode: slider
+    unit_of_measurement: rpm
+    icon: mdi:fan
+
+  vtr500_filter_replacement_period_months_sp:
+    name: Filter Replacement Cycle
+    min: 3
+    max: 15
+    step: 1
+    mode: slider
+    unit_of_measurement: months
+    icon: mdi:timelapse
+
+################################################################################
+# SENSORS
+################################################################################
+
+sensor:
+  - platform: template
+    sensors:
+      vtr500_supply_temperature:
+        value_template: "{{ state_attr('climate.vent_vtr500', 'current_temperature') }}"
+        friendly_name: "vtr500 supply temperature"
+        unique_id: vtr500_supply_temperature
+        unit_of_measurement: "°C"
+  - platform: template
+    sensors:
+      vtr500_supply_air_rf:
+        value_template: "{{((states('sensor.vtr500_supply_air_fan') | int(0) if value is not none and value != 'unavailable' else 0(0) if value is not none and value != 'unavailable' else 0) * 3) | round(0) }}"
+        friendly_name: "Supply air flow rate"
+        unique_id: vtr500_supply_air_rf
+        unit_of_measurement: "m³/h"
+  - platform: template
+    sensors:
+      vtr500_exhaust_air_rf:
+        value_template: "{{((states('sensor.vtr500_extractor_fan') | int(0) if value is not none and value != 'unavailable' else 0(0) if value is not none and value != 'unavailable' else 0) * 3) | round(0)}}"
+        friendly_name: "Exhaust air flow rate"
+        unique_id: vtr500_exhaust_air_rf
+        unit_of_measurement: "m³/h"
+  - platform: template
+    sensors:
+      vtr500_recovery_rate:
+        value_template: "{{((((states('sensor.vtr500_supply_temperature') | float ) - (states('sensor.vtr500_outdoor_temperature') | float)) / ((states('sensor.vtr500_exhaust_temperature') | float ) - (states('sensor.vtr500_outdoor_temperature') | float))) * 100) | round(1) }}"
+        unit_of_measurement: "%"
+        friendly_name: "Recovery rate"
+        unique_id: vtr500_recovery_rate
+
+      vtr500_time_to_filter_change_months:
+        friendly_name: "Next filter change"
+        unique_id: vtr500_time_to_filter_change
+        value_template: >-
+          {% if states('sensor.vtr500_time_to_filter_replacement_s')|int(0) > 1 %}
+            {% set time = states('sensor.vtr500_time_to_filter_replacement_s') | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set days = (time / 86400) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set months = (days / 30) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {%- if days > 548 -%}
+              More than 1.5 year
+              {%- else -%}
+              {%- if days >= 31 -%}
+                {{ months }} months
+              {%- endif -%}           
+              {%- if days <= 30 -%}
+                {{ days }} days
+              {%- endif -%}
+            {%- endif -%}    
+          {% else %}
+            Change filter!
+          {% endif %}
+
+      vtr500_away_countdown_time_t:
+        friendly_name: "Time remaining when active - Away"
+        unique_id: vtr500_away_countdown_time
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 5 %}
+            {% set time = states('sensor.vtr500_countdown_mode_time_s') | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set minutes = ((time % 3600) / 60) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set hours = ((time % 86400) / 3600) | int(0) if value is not none and value != 'unavailable' else 0 %}
+
+            {%- if time < 60 -%}
+              Less than 1 minute
+              {%- else -%}
+              {%- if hours > 0 -%}
+                  {{ hours }} h
+                {%- endif -%}
+              {%- if minutes > 0 -%}
+                {%- if hours > 0 -%}
+                  {{ ' ' }}
+                {%- endif -%}
+                {{ minutes }} min
+              {%- endif -%}
+            {%- endif -%}
+          {% else %}
+            Inactive
+          {% endif %}
+
+      vtr500_crowded_countdown_time_t:
+        friendly_name: "Time remaining when active - Crowded"
+        unique_id: vtr500_crowded_countdown_time
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 2 %}
+            {% set time = states('sensor.vtr500_countdown_mode_time_s') | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set minutes = ((time % 3600) / 60) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set hours = ((time % 86400) / 3600) | int(0) if value is not none and value != 'unavailable' else 0 %}
+
+            {%- if time < 60 -%}
+              Less than 1 minute
+              {%- else -%}
+              {%- if hours > 0 -%}
+                  {{ hours }} h
+                {%- endif -%}
+              {%- if minutes > 0 -%}
+                {%- if hours > 0 -%}
+                  {{ ' ' }}
+                {%- endif -%}
+                {{ minutes }} min
+              {%- endif -%}
+            {%- endif -%}
+          {% else %}
+            Inactive
+          {% endif %}
+
+      vtr500_refresh_countdown_time_t:
+        friendly_name: "Time remaining when active - Refresh"
+        unique_id: vtr500_refresh_countdown_time
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 3 %}
+            {% set time = states('sensor.vtr500_countdown_mode_time_s') | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set minutes = ((time % 3600) / 60) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set hours = ((time % 86400) / 3600) | int(0) if value is not none and value != 'unavailable' else 0 %}
+
+            {%- if time < 60 -%}
+              Less than 1 minute
+              {%- else -%}
+              {%- if hours > 0 -%}
+                  {{ hours }} h
+                {%- endif -%}
+              {%- if minutes > 0 -%}
+                {%- if hours > 0 -%}
+                  {{ ' ' }}
+                {%- endif -%}
+                {{ minutes }} min
+              {%- endif -%}
+            {%- endif -%}
+          {% else %}
+            Inactive
+          {% endif %}
+
+      vtr500_fireplace_countdown_time_t:
+        friendly_name: "Time remaining when active - Fireplace"
+        unique_id: vtr500_fireplace_countdown_time
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 4 %}
+            {% set time = states('sensor.vtr500_countdown_mode_time_s') | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set minutes = ((time % 3600) / 60) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set hours = ((time % 86400) / 3600) | int(0) if value is not none and value != 'unavailable' else 0 %}
+
+            {%- if time < 60 -%}
+              Less than 1 minute
+              {%- else -%}
+              {%- if hours > 0 -%}
+                  {{ hours }} h
+                {%- endif -%}
+              {%- if minutes > 0 -%}
+                {%- if hours > 0 -%}
+                  {{ ' ' }}
+                {%- endif -%}
+                {{ minutes }} min
+              {%- endif -%}
+            {%- endif -%}
+          {% else %}
+            Inactive
+          {% endif %}
+
+      vtr500_holiday_countdown_time_t:
+        friendly_name: "Time remaining when active - Holiday"
+        unique_id: vtr500_holiday_countdown_time
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 6 %}
+          
+            {% set time = states('sensor.vtr500_countdown_mode_time_s')|int(0) + (states('sensor.vtr500_countdown_mode_time_s_factor')|int(0) * 65535) %}
+            {% set days = (time / 86400) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set hours = ((time % 86400) / 3600) | int(0) if value is not none and value != 'unavailable' else 0 %}
+            {% set minutes = ((time % 3600) / 60) | int(0) if value is not none and value != 'unavailable' else 0 %}
+
+            {%- if days > 0 -%}
+              {{ days }} days
+            {% else %}
+              {%- if time < 60 -%}
+                Less than 1 minute
+              {%- else -%}
+                {%- if hours > 0 -%}
+                  {{ hours }} h
+                {%- endif -%}
+                {%- if minutes > 0 -%}
+                  {%- if hours > 0 -%}
+                    {{ ' ' }}
+                  {%- endif -%}
+                  {{ minutes }} min
+                {%- endif -%}
+              {%- endif -%}   
+            {%- endif -%}
+          {% else %}
+            Inactive
+          {% endif %}      
+
+      vtr500_summer_winter_operational_status:
+        friendly_name: "Active season"
+        unique_id: vs300_active_season01
+        value_template: >-
+          {% if states('sensor.vtr500_summer_winter_operation')|int(0) == 0 %}
+            Summer
+          {% elif states('sensor.vtr500_summer_winter_operation')|int(0) == 1 %}
+            Winter
+          {% else %}
+              Stone dead
+          {% endif %}
+
+      vtr500_regulation_mode:
+        friendly_name: "Regulation"
+        unique_id: vtr500_regulation_mode
+        value_template: >-
+          {% if states('sensor.vtr500_supply_air_room_exhaust_reg')|int(0) == 0 %}
+            Supply air regulation
+          {% elif states('sensor.vtr500_supply_air_room_exhaust_reg')|int(0) == 1 %}
+            Room regulation
+          {% elif states('sensor.vtr500_supply_air_room_exhaust_reg')|int(0) == 2 %}
+            Extract regulation
+          {% else %}
+            Stone dead
+          {% endif %}
+
+      vtr500_mode_status:
+        friendly_name: "Mode"
+        unique_id: vtr500_mode_status
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 0 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 2 %}
+            Auto schedule - Low
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 0 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 3 %}
+            Auto schedule - Normal           
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 0 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 4 %}
+            Auto schedule - High                       
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 0 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 0 %}
+            Auto schedule - Normal
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 0 %}
+            Manual STOP
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 1 %}
+            Manual Shitstorm? 
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 2 %}
+            Manual Low 
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 3 %}
+            Manual Normal
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) == 4 %}
+            Manual High                     
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 3  %}
+            Refresh
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 2  %}
+            Crowded
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 4  %}
+            Fireplace
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 5  %}
+            Away
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 6  %}
+            Holiday
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 7 %}
+            Cooker Hood
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 8 %}
+            Vacuum Cleaner
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 9 %}
+            CDI1
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 10 %}
+            CDI2
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 11 %}
+            CDI3
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 12 %}
+           Pressure guard         
+          {% else %}
+            WTF
+          {% endif %}
+
+      vtr500_manual_button_mode_status:
+        friendly_name: "Manual button mode status"
+        unique_id: vtr500_manual_button_mode_status
+        value_template: >-
+          {% if states('sensor.vtr500_mode_status_register')|int(0) == 0 and states('sensor.vtr500_manual_mode_command_register')|int(0) > 0 %}
+            Auto schedule
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) == 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) > 0 %}
+            Manual
+          {% elif states('sensor.vtr500_mode_status_register')|int(0) > 1 and states('sensor.vtr500_manual_mode_command_register')|int(0) > 0 %}
+            Standby            
+          {% else %}
+            Off
+          {% endif %}
+
+################################################################################
+# Switches
+################################################################################
+
+switch:
+  - platform: template
+    switches:
+      vtr500_auto_mode:
+        friendly_name: Auto mode
+        unique_id: vtr500_auto_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Auto schedule - Low') or is_state('sensor.vtr500_mode_status', 'Auto schedule - Normal') or is_state('sensor.vtr500_mode_status', 'Auto schedule - High')  }}"
+        turn_on:
+          - action: script.vtr500_auto_mode
+            data:
+              action: "on"
+        turn_off:
+          action: script.vtr500_auto_dummy_off
+          data:
+            action: "off"
+
+      vtr500_crowded_mode:
+        friendly_name: Crowded-mode
+        unique_id: vtr500_crowded_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Crowded') }}"
+        turn_on:
+          action: script.vtr500_crowded_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_crowded_dummy_off
+          data:
+            action: "off"
+
+      vtr500_fireplace_mode:
+        friendly_name: Fireplace-mode
+        unique_id: vtr500_fireplace_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Fireplace') }}"
+        turn_on:
+          action: script.vtr500_fireplace_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_fireplace_dummy_off
+          data:
+            action: "off"
+
+      vtr500_refresh_mode:
+        friendly_name: Refresh-mode
+        unique_id: vtr500_refresh_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Refresh') }}"
+        turn_on:
+          action: script.vtr500_refresh_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_refresh_dummy_off
+          data:
+            action: "off"
+
+      vtr500_away_mode:
+        friendly_name: Away-mode
+        unique_id: vtr500_away_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Away') }}"
+        turn_on:
+          action: script.vtr500_away_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_away_dummy_off
+          data:
+            action: "off"
+
+      vtr500_holiday_mode:
+        friendly_name: Holiday-mode
+        unique_id: vtr500_holiday_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Holiday') }}"
+        turn_on:
+          action: script.vtr500_holiday_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_holiday_dummy_off
+          data:
+            action: "off"
+
+      vtr500_man_stop_mode:
+        friendly_name: Manual stop
+        unique_id: vtr500_manual_stop_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Manual STOP') }}"
+        turn_on:
+          - action: script.vtr500_man_stop_mode
+            data:
+              action: "on"
+        turn_off:
+          action: script.vtr500_man_stop_dummy_off
+          data:
+            action: "off"
+
+      vtr500_man_low_mode:
+        friendly_name: Low speed
+        unique_id: vtr500_low_speed_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Manual Low') or is_state('sensor.vtr500_mode_status', 'Auto schedule - Low') or is_state('sensor.vtr500_mode_status', 'PPM Auto - Low') }}"
+        turn_on:
+          - action: script.vtr500_man_low_mode
+            data:
+              action: "on"
+        turn_off:
+          action: script.vtr500_man_low_dummy_off
+          data:
+            action: "off"
+
+      vtr500_man_normal_mode:
+        friendly_name: Normal speed
+        unique_id: vtr500_normal_speed_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Manual Normal') or is_state('sensor.vtr500_mode_status', 'Auto schedule - Normal') or is_state('sensor.vtr500_mode_status', 'PPM Auto - Normal') }}"
+        turn_on:
+          - action: script.vtr500_man_normal_mode
+            data:
+              action: "on"
+        turn_off:
+          action: script.vtr500_man_normal_dummy_off
+          data:
+            action: "off"
+
+      vtr500_man_high_mode:
+        friendly_name: High speed
+        unique_id: vtr500_high_speed_mode
+        value_template: "{{ is_state('sensor.vtr500_mode_status', 'Manual High') or is_state('sensor.vtr500_mode_status', 'Auto schedule - High') or is_state('sensor.vtr500_mode_status', 'PPM Auto - High') }}"
+        turn_on:
+          action: script.vtr500_man_high_mode
+          data:
+            action: "on"
+        turn_off:
+          action: script.vtr500_man_high_dummy_off
+          data:
+            action: "off"
+
+  - platform: modbus
+    scan_interval: 10
+    registers:
+      - name: vtr500_eco_mode
+        hub: vtr500
+        slowe: 1
+        address: 2504
+        command_on: 1 #Enable Eco operation based on temp. offset
+        command_off: 0 #Disable Eco operation
+        verify_state: true
+        input_type: holding
+        verify_register: 2504
+        state_on: 1
+        state_off: 0
+
+################################################################################
+# Script
+################################################################################
+script:
+  vtr500_man_stop_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_man_stop_mode_status_dummy
+      #Activate manual mode before speed
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1130
+          value: 0
+  vtr500_man_stop_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_man_stop_mode_status_dummy
+
+  vtr500_man_low_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_man_low_mode_status_dummy
+      #Activate manual mode before speed
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 2
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1130
+          value: 2
+  vtr500_man_low_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_man_low_mode_status_dummy
+
+  vtr500_man_normal_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_man_normal_mode_status_dummy
+      #Activate manual mode before speed
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 2
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1130
+          value: 3
+  vtr500_man_normal_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_man_normal_mode_status_dummy
+
+  vtr500_man_high_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_man_high_mode_status_dummy
+      #Activate manual mode before speed
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 2
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1130
+          value: 4
+  vtr500_man_high_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_man_high_mode_status_dummy
+
+  vtr500_auto_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_auto_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 1
+  vtr500_auto_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_auto_mode_status_dummy
+
+  vtr500_crowded_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_crowded_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 3
+  vtr500_crowded_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_crowded_mode_status_dummy
+
+  vtr500_refresh_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_refresh_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 4
+  vtr500_refresh_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_refresh_mode_status_dummy
+
+  vtr500_fireplace_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_fireplace_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 5
+  vtr500_fireplace_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_fireplace_mode_status_dummy
+
+  vtr500_away_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_away_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_holiday_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 6
+  vtr500_away_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_away_mode_status_dummy
+
+  vtr500_holiday_mode:
+    sequence:
+      - action: input_boolean.turn_on
+        entity_id: input_boolean.vtr500_holiday_mode_status_dummy
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_stop_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_low_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_normal_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_man_high_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_crowded_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_auto_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_refresh_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_fireplace_mode
+      - action: switch.turn_off
+        entity_id: switch.vtr500_away_mode
+      - delay: "00:00:02"
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1161
+          value: 7
+  vtr500_holiday_dummy_off:
+    sequence:
+      action: input_boolean.turn_off
+      entity_id: input_boolean.vtr500_holiday_mode_status_dummy
+
+
+################################################################################
+# Automation
+################################################################################
+
+automation:
+  - id: "vtr500getsetpointeco"
+    alias: vtr500 Get setpoint Eco Heat offset
+    mode: restart
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_eco_offset_temp_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_eco_offset_temp_sp
+          value: "{{ states('sensor.vtr500_eco_heat_offset') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint eco offset temp        
+  - id: "vtr500getsetpointaway"
+    alias: vtr500 Get setpoint Away Duration
+    mode: restart
+    description: ""
+    trigger:        
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_away_mode_duration_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_away_mode_duration_sp
+          value: "{{ states('sensor.vtr500_away_mode_duration') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint away
+  - id: "vtr500getsetpointcrowded"
+    alias: vtr500 Get setpoint Crowded Duration
+    mode: restart
+    description: ""
+    trigger:           
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_crowded_mode_duration
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_crowded_mode_duration
+          value: "{{ states('sensor.vtr500_crowded_mode_duration') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint crowded
+  - id: "vtr500getsetpointfireplace"
+    alias: vtr500 Get setpoint Fireplace Duration
+    mode: restart
+    description: ""
+    trigger:                   
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_fireplace_mode_duration_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_fireplace_mode_duration_sp
+          value: "{{ states('sensor.vtr500_fireplace_mode_duration') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint fireplace
+  - id: "vtr500getsetpointholiday"
+    alias: vtr500 Get setpoint Holiday Duration
+    mode: restart
+    description: ""
+    trigger:                            
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_holiday_mode_duration_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_holiday_mode_duration_sp
+          value: "{{ states('sensor.vtr500_holiday_mode_duration') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint holiday
+  - id: "vtr500getsetpointrefresh"
+    alias: vtr500 Get setpoint Refresh Duration
+    mode: restart
+    description: ""
+    trigger:                   
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_refresh_mode_duration_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_refresh_mode_duration_sp
+          value: "{{ states('sensor.vtr500_refresh_mode_duration') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint refresh
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_supply_air_fan_speed_normal_sp
+          value: "{{ states('sensor.vtr500_supply_air_fan_speed_normal') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint away
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_exhaust_air_fan_speed_normal_sp
+          value: "{{ states('sensor.vtr500_exhaust_air_fan_speed_normal') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint away  
+  - id: "vtr500getsetpointfilter"
+    alias: vtr500 Get setpoint Filter Replacement
+    mode: restart
+    description: ""
+    trigger:                   
+      - trigger: state
+        entity_id:
+          - input_number.vtr500_filter_replacement_period_months_sp
+    condition: []
+    action:
+      - delay: "00:00:11"
+      - action: input_number.set_value
+        data_template:
+          entity_id: input_number.vtr500_filter_replacement_period_months_sp
+          value: "{{ states('sensor.vtr500_filter_replacement_period_months') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+        alias: Get setpoint filter
+
+  - id: "vtr500SetSetpointCrowded"
+    alias: vtr500 Set Setpoint Crowded Mode
+#    unique_id: vtr500SetSetpointCrowded01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_crowded_mode_duration_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1104
+          value: "{{ states.input_number.vtr500_crowded_mode_duration_sp.state | int(0) if value is not none and value != 'unavailable' else 0 }}"
+
+  - id: "vtr500SetSetpointEco"
+    alias: vtr500 Set Setpoint Eco Mode
+#    unique_id: vtr500SetSetpointEco01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_eco_offset_temp_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 2503
+          value: "{{ states.input_number.vtr500_eco_offset_temp_sp.state | int(0) if value is not none and value != 'unavailable' else 0 * 10 }}"
+
+  - id: "vtr500SetSetpointFireplace"
+    alias: vtr500 Set Setpoint Fireplace Mode
+#    unique_id: vtr500SetSetpointFireplace01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_fireplace_mode_duration_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1102
+          value: "{{ states.input_number.vtr500_fireplace_mode_duration_sp.state | int(0) if value is not none and value != 'unavailable' else 0 }}"
+          
+  - id: "vtr500SetSetpointAway"
+    alias: vtr500 Set Setpoint Away Mode
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_away_mode_duration_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1101
+          value: "{{ states.input_number.vtr500_away_mode_duration_sp.state | int(0) if value is not none and value != 'unavailable' else 0 }}"          
+
+  - id: "vtr500SetSetpointHoliday"
+    alias: vtr500 Set Setpoint Holiday
+#    unique_id: vtr500SetSetpointHoliday01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_holiday_mode_duration_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1100
+          value: "{{ states.input_number.vtr500_holiday_mode_duration_sp.state | int(0) if value is not none and value != 'unavailable' else 0 }}"
+
+  - id: "vtr500SetSetpointRefresh"
+    alias: vtr500 Set Setpoint Refresh Mode
+#    unique_id: vtr500SetSetpointRefresh01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_refresh_mode_duration_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1103
+          value: "{{ states('input_number.vtr500_refresh_mode_duration_sp') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+
+  - id: "vtr500SetSetpointSAFnorm"
+    alias: vtr500 Set Setpoint Supply air fan speed normal
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_supply_air_fan_speed_normal_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1414
+          value: "{{ states('input_number.vtr500_supply_air_fan_speed_normal_sp') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+
+  - id: "vtr500SetSetpointexhaustairfanspeednormal"
+    alias: vtr500 Set Setpoint Exhaust air fan speed normal
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_exhaust_air_fan_speed_normal_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 1415
+          value: "{{ states('input_number.vtr500_exhaust_air_fan_speed_normal_sp') | int(0) if value is not none and value != 'unavailable' else 0 }}"
+
+  - id: "vtr500SetSetpointFilter"
+    alias: vtr500 Set Setpoint Filter Replacement
+#    unique_id: vtr500SetSetpointFilter01
+    description: ""
+    trigger:
+      - trigger: state
+        entity_id: input_number.vtr500_filter_replacement_period_months_sp
+    condition: []
+    action:
+      - action: modbus.write_register
+        data_template:
+          hub: vtr500
+          unit: 1
+          address: 7000
+          value: "{{ states.input_number.vtr500_filter_replacement_period_months_sp.state | int(0) if value is not none and value != 'unavailable' else 0 }}"
