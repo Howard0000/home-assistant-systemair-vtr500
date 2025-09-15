@@ -112,9 +112,9 @@ For å bruke den må du selv lage en automasjon eller et skript som slår på de
 *   **`packages/systemair.yaml`**: Hovedkonfigurasjonen for alle sensorer, brytere og skript. Denne filen er på engelsk.
 *   **`lovelace/no/` & `lovelace/en/`**: Inneholder de tre YAML-filene for Lovelace-dashboardet, levert på både norsk og engelsk.
 *   **`node-red/no/` & `node-red/en/`**: Inneholder `flows.json`-filen for avansert automasjon, levert på både norsk og engelsk.
-*   **`images/`**: Skjermbilder og diagrammer brukt i denne guiden.
-*   **`README.no.md`**: Denne guiden på norsk.
-*   **`README.md`**: Denne guiden på engelsk.
+*   **`image/`**: Skjermbilder og diagrammer brukt i denne guiden.
+*   **`README.md`**: Denne guiden på norsk.
+*   **`README.en.md`**: Denne guiden på engelsk.
 
 ## Anerkjennelser og Credits
 *   Kjernekonfigurasjonen (`systemair.yaml`) er basert på arbeidet til **@Ztaeyn** i hans [HomeAssistant-VTR-Modbus](https://github.com/Ztaeyn/HomeAssistant-VTR-Modbus) repositorium.
@@ -123,5 +123,6 @@ For å bruke den må du selv lage en automasjon eller et skript som slår på de
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
