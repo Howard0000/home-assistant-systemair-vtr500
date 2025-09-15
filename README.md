@@ -18,18 +18,6 @@ Dette repositoriet inneholder en komplett konfigurasjon for å integrere og styr
 ## Ansvarsfraskrivelse (Disclaimer)
 > Dette er et uoffisielt community-prosjekt og er ikke utviklet, støttet eller vedlikeholdt av Systemair. All konfigurasjon og bruk skjer på eget ansvar. For offisiell dokumentasjon og support, vennligst se [Systemairs offisielle nettsider](https://www.systemair.com/).
 
-### Installasjon via HACS (Anbefalt metode)
-
-Selv om dette ikke er en standard-integrasjon, kan du legge til dette repositoriet i HACS for å enkelt holde styr på oppdateringer.
-
-1.  I Home Assistant, naviger til **HACS** -> **Integrasjoner**.
-2.  Klikk på de tre prikkene øverst til høyre og velg **"Egendefinerte repositorier"**.
-3.  I "Repositorie"-feltet, lim inn denne URL-en:
-    `https://github.com/Howard0000/ha-systemair-vtr500`
-4.  For "Kategori", velg **"Integrasjon"**.
-5.  Klikk **"LEGG TIL"**.
-6.  Repositoriet vil nå dukke opp i listen din i HACS. Klikk på det og deretter **"LAST NED"**.
-7.  Dette laster kun ned prosjektfilene. Du må fortsatt følge den manuelle konfigurasjonen under for å få det til å fungere.
 ---
 
 ## 1. Krav
@@ -135,4 +123,5 @@ For å bruke den må du selv lage en automasjon eller et skript som slår på de
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
