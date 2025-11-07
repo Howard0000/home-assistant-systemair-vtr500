@@ -1,6 +1,9 @@
 # Home Assistant Integration for Systemair SAVE VTR-500
 
 > [Les denne guiden på norsk](README.md)
+>
+⚠️ This is not a HACS integration.
+Please follow the manual installation instructions below (YAML files, Lovelace dashboard, and Node-RED flow).
 
 This repository contains a complete configuration to integrate and control a Systemair SAVE VTR-500 ventilation unit with Home Assistant via Modbus TCP.
 
@@ -123,3 +126,4 @@ To use it, create an automation or script that turns this switch on.
 
 ## 📝 License
 MIT — see `LICENSE`.
+
