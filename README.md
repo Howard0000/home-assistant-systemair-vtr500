@@ -2,7 +2,7 @@
 >
 > Dette repoet vedlikeholdes ikke lenger.
 > En nyere og aktivt vedlikeholdt integrasjon finnes her:
-> **<LENKE TIL NYTT REPO>**
+> **<[LENKE TIL NYTT REPO](https://github.com/Howard0000/home-assistant-systemair-modbus)>**
 >
 > Repoet er bevart kun for historikk og referanse.
 
@@ -135,6 +135,7 @@ For å bruke den må du selv lage en automasjon eller et skript som slår på de
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
 
