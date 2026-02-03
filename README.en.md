@@ -1,3 +1,13 @@
+> ⚠️ **Deprecated / archived**
+>
+> This repository is no longer maintained.
+> A newer, actively maintained integration is available here:
+> **<[LINK TO NEW REPOSITORY](https://github.com/Howard0000/home-assistant-systemair-modbus)>**
+>
+> This repository is kept for historical reference only.
+
+
+
 # Home Assistant Integration for Systemair SAVE VTR-500
 
 > [Les denne guiden på norsk](README.md)
@@ -126,4 +136,5 @@ To use it, create an automation or script that turns this switch on.
 
 ## 📝 License
 MIT — see `LICENSE`.
+
 
