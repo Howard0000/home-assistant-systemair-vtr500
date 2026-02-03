@@ -1,3 +1,12 @@
+> ⚠️ **Utgått / arkivert**
+>
+> Dette repoet vedlikeholdes ikke lenger.
+> En nyere og aktivt vedlikeholdt integrasjon finnes her:
+> **<LENKE TIL NYTT REPO>**
+>
+> Repoet er bevart kun for historikk og referanse.
+
+
 # Home Assistant-integrasjon for Systemair SAVE VTR-500
 
 > [Read this guide in English](README.en.md)
@@ -126,6 +135,7 @@ For å bruke den må du selv lage en automasjon eller et skript som slår på de
 
 ## 📝 Lisens
 MIT — se `LICENSE`.
+
 
 
 
